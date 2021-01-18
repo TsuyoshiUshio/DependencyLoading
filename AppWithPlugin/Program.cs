@@ -24,6 +24,7 @@ namespace AppWithPlugin
                 string[] pluginPaths = new string[]
                 {
                     // Paths to plugins to load.
+                    args[0]
                 };
 
                 IEnumerable<ICommand> commands = pluginPaths.SelectMany(pluginPath =>
@@ -42,11 +43,11 @@ namespace AppWithPlugin
                 }
                 else
                 {
-                    foreach (string commandName in args)
+                    foreach (string commandName in args.Skip(1))
                     {
                         Console.WriteLine($"-- {commandName} --");
                         // Execute the command with the name passed as an argument.
-                        ICommand command = commands.FirstOrDefault(commands => commands.Name == commandName);
+                        ICommand command = commands.FirstOrDefault(command => command.Name == commandName);
                         if (command == null)
                         {
                             Console.WriteLine("No such command is known.");
